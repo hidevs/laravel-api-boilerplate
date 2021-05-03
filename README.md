@@ -51,6 +51,11 @@ First page in project at route `/`
 
 ## Usage
 
+### 0. Clone project
+```bash
+git clone https://github.com/hidevs/laravel-api-boilerplate
+```
+
 ### 1. Create .env file and config
 ```bash
 $ cp .env.example .env
@@ -87,3 +92,12 @@ $ php artisan hd:install
 # 7. running queue
 ```
 
+### 4. Clear caches and optimize project
+```bash
+php artisan optimize
+```
+
+### 5. Run server
+```bash
+php artisan serve
+```
