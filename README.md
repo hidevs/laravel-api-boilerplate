@@ -4,7 +4,9 @@
 </a>
 </p>
 
-# Laravel API base boilerplate
+# Laravel API boilerplate
+
+
 
 
 ## Installed packages
@@ -15,6 +17,8 @@ Review this package documentation before start project
 * [qcod/laravel-settings](https://github.com/qcod/laravel-settings)
 * [spatie/laravel-medialibrary](https://github.com/spatie/laravel-medialibrary)
 * [morilog/jalali](https://github.com/morilog/jalali)
+
+
 
 
 ## Customization
@@ -70,6 +74,8 @@ QUEUE_CONNECTION=database
 ```
 
 
+
+
 ### 3. Build Setup
 
 ```bash
@@ -89,10 +95,17 @@ $ php artisan hd:install
 # 8. running queue
 ```
 
+
+
+
 ### 4. Clear caches and optimize project
 ```bash
 php artisan optimize
 ```
+
+
+
+
 
 ### 5. Run server
 ```bash
