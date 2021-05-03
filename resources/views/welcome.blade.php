@@ -11,6 +11,8 @@
     <!-- ============== Resources style ============== -->
     <link rel="stylesheet" href="{{ asset('welcome/css/style.css') }}" />
 
+    <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
+
     <!-- Modernizr runs quickly on page load to detect features -->
     <script src="{{ asset('welcome/js//modernizr.custom.js') }}"></script>
 </head>
