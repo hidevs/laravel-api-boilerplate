@@ -1,7 +1,8 @@
 /node_modules
 /public/hot
 /public/cdn
-/storage/app/cdn
+/storage/app/cdn/*
+/storage/media-library
 /storage/*.key
 /vendor
 ــ
