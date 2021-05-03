@@ -8,7 +8,6 @@
 
 
 ## Installed packages
-<hr>
 Review this package documentation before start project
 
 * [tymon/jwt-auth](https://github.com/tymondesigns/jwt-auth)
@@ -19,7 +18,6 @@ Review this package documentation before start project
 
 
 ## Customization
-<hr>
 
 ### [Exception Handler](app/Exceptions/Handler.php)
 Complete API base exception handler
@@ -52,7 +50,6 @@ First page in project at route `/`
 
 
 ## Usage
-<hr>
 
 ### 1. Create .env file and config
 ```bash
