@@ -44,6 +44,10 @@ class HDInstall extends Command
 
         $this->callSilently('optimize');
 
+        if (empty(env('APP_KEY')) && $this->confirm('Generate APP secret key ?')) {
+            $this->call('key:generate');
+        }
+
         if (empty(env('JWT_SECRET')) && $this->confirm('Generate JWT secret key ?')) {
             $this->call('jwt:secret');
         }

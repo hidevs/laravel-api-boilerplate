@@ -83,13 +83,14 @@ $ composer install
 # install first configuration
 $ php artisan hd:install
 # this command contains these:
-# 1. generate jwt secret token
-# 2. link cdn storage
-# 3. remove this year directory in cdn storage
-# 4. drop all tables
-# 5. migrate tables
-# 6. seeding first data to tables
-# 7. running queue
+# 1. generate app secret token
+# 2. generate jwt secret token
+# 3. link cdn storage
+# 4. remove this year directory in cdn storage
+# 5. drop all tables
+# 6. migrate tables
+# 7. seeding first data to tables
+# 8. running queue
 ```
 
 ### 4. Clear caches and optimize project
