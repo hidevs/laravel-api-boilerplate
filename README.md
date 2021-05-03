@@ -61,16 +61,12 @@ git clone https://github.com/hidevs/laravel-api-boilerplate
 $ cp .env.example .env
 ```
 ```dotenv
-APP_KEY=
-.
 DB_DATABASE=
 DB_USERNAME=
 DB_PASSWORD=
 .
 CACHE_DRIVER=database
 QUEUE_CONNECTION=database
-.
-JWT_SECRET=
 ```
 
 
