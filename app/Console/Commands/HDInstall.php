@@ -5,15 +5,16 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
 use Morilog\Jalali\Jalalian;
+use function PHPUnit\Framework\directoryExists;
 
-class HDFresh extends Command
+class HDInstall extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'hd:fresh';
+    protected $signature = 'hd:install';
 
     /**
      * The console command description.
@@ -39,10 +40,22 @@ class HDFresh extends Command
      */
     public function handle()
     {
-        $currentDirectory = Jalalian::now()->format('Y');
-        if ($this->confirm('Remove ' . $currentDirectory . ' media directory ?')) {
-            Storage::disk('cdn')->deleteDirectory($currentDirectory);
-            $this->comment('hd:fresh ==> Remove '. $currentDirectory . ' directory with all files');
+        $cdnDirectory = Jalalian::now()->format('Y');
+
+        $this->callSilently('optimize');
+
+        if (empty(env('JWT_SECRET')) && $this->confirm('Generate JWT secret key ?')) {
+            $this->call('jwt:secret');
+        }
+
+        if (!file_exists(public_path('cdn')) && $this->confirm('Link storages ?')) {
+            $this->call('storage:link');
+        }
+
+
+        if (file_exists(Storage::disk('cdn')->deleteDirectory($cdnDirectory)) && $this->confirm('Remove ' . $cdnDirectory . ' media directory ?')) {
+            Storage::disk('cdn')->deleteDirectory($cdnDirectory);
+            $this->comment('hd:fresh ==> Remove '. $cdnDirectory . ' directory with all files');
         }
 
 

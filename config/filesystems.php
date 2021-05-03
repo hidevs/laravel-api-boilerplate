@@ -44,7 +44,7 @@ return [
 
         'cdn' => [
             'driver' => 'local',
-            'root' => storage_path('app/cdn'),
+            'root' => storage_path('cdn'),
             'url' => env('APP_URL').'/cdn',
             'visibility' => 'public',
         ],
@@ -74,7 +74,7 @@ return [
 
     'links' => [
 //        public_path('storage') => storage_path('app/public'),
-        public_path('cdn') => storage_path('app/cdn'),
+        public_path('cdn') => storage_path('cdn'),
     ],
 
 ];
