@@ -23,7 +23,7 @@ class MediaFactory extends Factory
      */
     public function definition()
     {
-        $simpleImage = public_path('favicon');
+        $simpleImage = public_path('favicon.png');
 
         $type = $this->faker->randomElement(Media::TYPES);
         $model = $type::find($this->faker->unique()->numberBetween(1, $type::count()));
