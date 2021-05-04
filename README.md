@@ -1,6 +1,6 @@
 <p align="center">
 <a href="https://hidevs.team" target="_blank">
-<img src="public/welcome/img/logo.png" width="900">
+<img src="public/welcome/img/logo.png" width="400">
 </a>
 </p>
 
