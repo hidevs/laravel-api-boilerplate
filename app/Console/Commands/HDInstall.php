@@ -4,8 +4,6 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
-use Morilog\Jalali\Jalalian;
-use function PHPUnit\Framework\directoryExists;
 
 class HDInstall extends Command
 {
@@ -40,8 +38,6 @@ class HDInstall extends Command
      */
     public function handle()
     {
-        $cdnDirectory = Jalalian::now()->format('Y');
-
         $this->callSilently('optimize');
 
         if (empty(env('APP_KEY')) && $this->confirm('Generate APP secret key ?')) {
@@ -56,18 +52,15 @@ class HDInstall extends Command
             $this->call('storage:link');
         }
 
-
-        if (file_exists(Storage::disk('cdn')->deleteDirectory($cdnDirectory)) && $this->confirm('Remove ' . $cdnDirectory . ' media directory ?')) {
-            Storage::disk('cdn')->deleteDirectory($cdnDirectory);
-            $this->comment('hd:fresh ==> Remove '. $cdnDirectory . ' directory with all files');
+        if ($this->confirm('Remove media directory ?')) {
+            Storage::disk('cdn')->deleteDirectory('media');
+            $this->comment('site:fresh ==> Remove media directory with all files');
         }
-
 
         if ($this->confirm('Fresh migration ?')) {
             $this->call('migrate:fresh');
             $this->comment('hd:fresh ==> Complete Fresh');
         }
-
 
         if ($this->confirm('Seeding to database ?')) {
             try {
@@ -87,8 +80,7 @@ class HDInstall extends Command
                 $this->callSilently('optimize');
             }
         }
-
-
+        
         return 0;
     }
 }
