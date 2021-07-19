@@ -28,7 +28,7 @@ class SettingSeeder extends Seeder
 
     public function models()
     {
-        settings()->group(User::class)->set([
+        settings()->group(model_setting_name(User::class))->set([
             'small_avatar_width' => 64,
             'small_avatar_height' => 64,
             'medium_avatar_width' => 128,
