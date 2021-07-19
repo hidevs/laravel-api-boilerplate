@@ -1,9 +1,7 @@
 <?php
 
-
 namespace App\Services\MediaLibrary;
 
-use Morilog\Jalali\Jalalian;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\MediaLibrary\Support\PathGenerator\PathGenerator;
 
@@ -40,10 +38,12 @@ class CustomPathGenerator implements PathGenerator
     protected function getBasePath(Media $media): string
     {
         $prefix = $this->merge_path(
+            'media',
             $this->date_prefix(),
-            strtolower(class_basename($media->model_type)),
-            $media->model->id
+            class_to_slug($media->model_type),
+            $media->model_id
         );
+
         switch ($media->collection_name) {
             case 'default':
                 return $this->merge_path($prefix, $media->id);
@@ -62,6 +62,6 @@ class CustomPathGenerator implements PathGenerator
 
     private function date_prefix(): string
     {
-        return Jalalian::now()->format('Y/m');
+        return jalali_date('now', 'Y/m');
     }
 }
