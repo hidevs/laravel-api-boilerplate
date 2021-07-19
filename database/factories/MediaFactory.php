@@ -31,7 +31,7 @@ class MediaFactory extends Factory
         switch ($type) {
             case User::class:
                 $this->owner = $model;
-                $this->addMedia($model, 'avatar', $simpleImage);
+                $this->addMedia($model, 'avatar', fake_model_image($model, 'avatar'), true);
                 break;
             default:
                 break;
@@ -40,16 +40,12 @@ class MediaFactory extends Factory
         return [];
     }
 
-    public function addMedia($model, string $collection, $file)
+    public function addMedia($model, $collection, $path, $isUrl = false)
     {
-        if (!is_null($this->owner))
-            return auth_resolver($this->owner, function () use ($model, $file, $collection) {
-                return $model->addMedia($file)
-                    ->preservingOriginal()
-                    ->toMediaCollection($collection);
-            });
-        return $model->addMedia($file)
+        if ($isUrl)
+            return $model->addMediaFromUrl($path)
+                ->toMediaCollection($collection);
+        return $model->addMedia($path)
             ->preservingOriginal()
             ->toMediaCollection($collection);
     }
-}
