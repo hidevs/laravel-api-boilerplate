@@ -80,11 +80,15 @@ class User extends Authenticatable implements JWTSubject, HasMedia
         } catch (InvalidManipulation $e) {}
     }
 
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = !is_null($value) ? bcrypt($value) : null;
+    }
 
-
-
-
-
+    public function setMobileAttribute($value)
+    {
+        $this->attributes['mobile'] = to_valid_mobile_number($value);
+    }
 
     public function getJWTIdentifier()
     {
