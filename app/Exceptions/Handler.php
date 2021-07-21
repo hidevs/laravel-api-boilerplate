@@ -26,7 +26,13 @@ class Handler extends ExceptionHandler
      * @var array
      */
     protected $dontReport = [
-        //
+        AuthorizationException::class,
+        ThrottleRequestsException::class,
+        ModelNotFoundException::class,
+        TokenInvalidException::class,
+        TokenExpiredException::class,
+        JWTException::class,
+        NotFoundHttpException::class,
     ];
 
     /**
@@ -77,48 +83,55 @@ class Handler extends ExceptionHandler
      */
     protected function convertValidationExceptionToResponse(ValidationException $e, $request): Response
     {
-        $e = new ValidationException($e->validator, (responseJson([
-            'message' => __('validation.exceptions.ValidationException'),
-            'errors' => $e->errors()
-        ], $e->status)), $e->errorBag);
+        if ($request->expectsJson()) {
+            $e = new ValidationException($e->validator, (responseJson([
+                'message' => __('validation.exceptions.ValidationException'),
+                'errors' => $e->errors()
+            ], $e->status)), $e->errorBag);
+        }
         return parent::convertValidationExceptionToResponse($e, $request);
     }
 
     public function render($request, Throwable $e)
     {
-        switch (get_class($e)) {
-            case AuthorizationException::class:
-                return responseJson([
-                    'message' => __('validation.exceptions.AuthorizationException')
-                ], 403);
-            case ThrottleRequestsException::class:
-                return responseJson([
-                    'message' => __('validation.exceptions.ThrottleRequestsException')
-                ], 429);
-            case ModelNotFoundException::class:
-                return responseJson([
-                    'message' => __('validation.exceptions.ModelNotFoundException', [
-                        'attribute' => __('validation.attributes.' . strtolower(last(explode('\\', $e->getModel()))))
-                    ])
-                ], 404);
-            case TokenInvalidException::class:
-                return responseJson([
-                    'message' => __('validation.exceptions.TokenInvalidException')
-                ], 400);
-            case TokenExpiredException::class:
-                return responseJson([
-                    'message' => __('validation.exceptions.TokenExpiredException')
-                ], 400);
-            case JWTException::class:
-                return responseJson([
-                    'message' => __('validation.exceptions.JWTException')
-                ], 400);
-            case NotFoundHttpException::class:
-                return responseJson([
-                    'message' => __('validation.exceptions.NotFoundHttpException')
-                ], 404);
-            default:
-                return parent::render($request, $e);
+       if ($request->expectsJson()) {
+            switch (get_class($e)) {
+                case AuthorizationException::class:
+                    return responseJson([
+                        'message' => __('validation.exceptions.AuthorizationException')
+                    ], 403);
+                case ThrottleRequestsException::class:
+                    return responseJson([
+                        'message' => __('validation.exceptions.ThrottleRequestsException')
+                    ], 429);
+                case ModelNotFoundException::class:
+                    return responseJson([
+                        'message' => __('validation.exceptions.ModelNotFoundException', [
+                            'attribute' => __('validation.attributes.' . strtolower(last(explode('\\', $e->getModel()))))
+                        ])
+                    ], 404);
+                case TokenInvalidException::class:
+                    return responseJson([
+                        'message' => __('validation.exceptions.TokenInvalidException')
+                    ], 400);
+                case TokenExpiredException::class:
+                    return responseJson([
+                        'message' => __('validation.exceptions.TokenExpiredException')
+                    ], 400);
+                case JWTException::class:
+                    return responseJson([
+                        'message' => __('validation.exceptions.JWTException')
+                    ], 400);
+                case NotFoundHttpException::class:
+                    return responseJson([
+                        'message' => __('validation.exceptions.NotFoundHttpException')
+                    ], 404);
+                default:
+                    return responseJson([
+                        'message' => $e->getMessage()
+                    ], $e->getCode());
+            }
         }
+        return parent::render($request, $e);
     }
 }
