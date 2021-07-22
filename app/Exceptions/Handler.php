@@ -127,9 +127,7 @@ class Handler extends ExceptionHandler
                         'message' => __('validation.exceptions.NotFoundHttpException')
                     ], 404);
                 default:
-                    return responseJson([
-                        'message' => $e->getMessage()
-                    ], $e->getCode());
+                    return parent::render($request, $e);
             }
         }
         return parent::render($request, $e);
